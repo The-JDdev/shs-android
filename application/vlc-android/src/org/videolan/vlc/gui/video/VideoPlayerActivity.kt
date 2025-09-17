@@ -262,6 +262,8 @@ open class VideoPlayerActivity : AppCompatActivity(), PlaybackService.Callback, 
     var savedMediaIndex: Int = 0
     private var askResume = true
 
+    private lateinit var nightOverlay: View
+
     var playlistModel: PlaylistModel? = null
 
     lateinit var settings: SharedPreferences
@@ -545,10 +547,10 @@ open class VideoPlayerActivity : AppCompatActivity(), PlaybackService.Callback, 
         displayManager = DisplayManager(this, PlaybackService.renderer, false, enableCloneMode, isBenchmark)
         setContentView(if (displayManager.isPrimary) R.layout.player else R.layout.player_remote_control)
 
-
         rootView = findViewById(R.id.player_root)
 
 
+        nightOverlay = findViewById(R.id.night_mode_overlay)
         overlayDelegate.playlist = findViewById(R.id.video_playlist)
         overlayDelegate.playlistSearchText = findViewById(R.id.playlist_search_text)
         overlayDelegate.playlistContainer = findViewById(R.id.video_playlist_container)
@@ -1889,10 +1891,17 @@ open class VideoPlayerActivity : AppCompatActivity(), PlaybackService.Callback, 
     internal fun changeBrightness(delta: Float) {
         // Estimate and adjust Brightness
         val lp = window.attributes
-        var brightness = (lp.screenBrightness + delta).coerceIn(0.01f, 1f)
+        val rawBrightness = lp.screenBrightness + delta
+        val brightness = rawBrightness.coerceIn(-1f, 1f)
+
+        if (rawBrightness < 0.01f) {
+            val overlayAlpha = -rawBrightness.coerceIn(-1f, 0f)
+            nightOverlay.alpha = overlayAlpha
+        } else {
+            nightOverlay.alpha = 0f
+        }
         setWindowBrightness(brightness)
-        brightness = (brightness * 100).roundToInt().toFloat()
-        overlayDelegate.showBrightnessBar(brightness.toInt())
+        overlayDelegate.showBrightnessBar((brightness * 100).roundToInt())
     }
 
     private fun setWindowBrightness(brightness: Float) {

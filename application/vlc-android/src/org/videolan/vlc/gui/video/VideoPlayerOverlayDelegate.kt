@@ -370,6 +370,8 @@ class VideoPlayerOverlayDelegate (private val player: VideoPlayerActivity) {
         playerBrightnessProgress = player.findViewById(R.id.playerBrightnessProgress)
         playerOverlayBrightness.setVisible()
         brightnessValueText.text = "$brightness%"
+        playerBrightnessProgress.isDouble = true
+        playerBrightnessProgress.isNegative = true
         playerBrightnessProgress.setValue(brightness)
         playerOverlayBrightness.setVisible()
         player.handler.removeMessages(VideoPlayerActivity.FADE_OUT_BRIGHTNESS_INFO)

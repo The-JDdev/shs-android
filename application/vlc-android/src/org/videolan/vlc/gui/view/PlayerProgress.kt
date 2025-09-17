@@ -39,12 +39,14 @@ import org.videolan.vlc.R
 
 class PlayerProgress : View {
     var isDouble: Boolean = false
+    var isNegative: Boolean = false
     private var value: Int = 50
     private val progressPercent: Float
-        get() = if (isDouble) value.toFloat() / 200 else value.toFloat() / 100
+        get() = if (isDouble && !isNegative) value.toFloat() / 200 else if(isDouble) (value.toFloat() + 100) / 200 else value.toFloat() / 100
 
     private val progressColor = ContextCompat.getColor(context, R.color.white)
     private val boostColor = ContextCompat.getColor(context, R.color.orange700)
+    private val boostWithNegativeColor = ContextCompat.getColor(context, R.color.black )
     private val shadowColor = ContextCompat.getColor(context, R.color.blacktransparent)
     private val backgroundColor = ContextCompat.getColor(context, R.color.white_transparent_50)
 
@@ -119,7 +121,7 @@ class PlayerProgress : View {
         canvas.drawPath(firstClippingRegion.boundaryPath, paintProgress)
 
         //draw boost
-        if (isDouble && progressPercent > 0.5) {
+        if (isDouble && !isNegative && progressPercent > 0.5) {
             val clipBottom = yOffset + (bottom - top) * (0.5F)
             rectProgress.set(left, clipTop, right, clipBottom)
 
@@ -132,13 +134,38 @@ class PlayerProgress : View {
             clippingPath.lineTo(rectProgress.left, rectProgress.bottom)
             clippingPath.close()
 
-
             secondClippingRegion.setPath(clippingPath, clip)
             firstClippingRegion.op(secondClippingRegion, Region.Op.INTERSECT)
 
             paintProgress.color = boostColor
             canvas.drawPath(firstClippingRegion.boundaryPath, paintProgress)
+        } else if (isDouble && isNegative && progressPercent < 0.5F) {
+            // Calculate the center (baseline at 100%)
+            val center = yOffset + (bottom - top) * 0.5F
+
+            // Where should the "negative fill" end?
+            val clipBottom = center + (bottom - top) * (0.5F - progressPercent)
+
+            rectProgress.set(left, center, right, clipBottom)
+
+            clip.set(left.toInt(), center.toInt(), right.toInt(), clipBottom.toInt())
+
+            firstClippingRegion.setPath(path, clip)
+
+            clippingPath.reset()
+            clippingPath.moveTo(rectProgress.left, rectProgress.top)
+            clippingPath.lineTo(rectProgress.right, rectProgress.top)
+            clippingPath.lineTo(rectProgress.right, rectProgress.bottom)
+            clippingPath.lineTo(rectProgress.left, rectProgress.bottom)
+            clippingPath.close()
+
+            secondClippingRegion.setPath(clippingPath, clip)
+            firstClippingRegion.op(secondClippingRegion, Region.Op.INTERSECT)
+
+            paintProgress.color = boostWithNegativeColor
+            canvas.drawPath(firstClippingRegion.boundaryPath, paintProgress)
         }
+
 
         super.onDraw(canvas)
     }
