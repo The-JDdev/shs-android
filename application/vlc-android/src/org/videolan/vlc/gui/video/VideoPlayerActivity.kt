@@ -263,6 +263,7 @@ open class VideoPlayerActivity : AppCompatActivity(), PlaybackService.Callback, 
     private var askResume = true
 
     private lateinit var nightOverlay: View
+    private var rawBrightness: Float = 0.5f
 
     var playlistModel: PlaylistModel? = null
 
@@ -549,7 +550,22 @@ open class VideoPlayerActivity : AppCompatActivity(), PlaybackService.Callback, 
 
         rootView = findViewById(R.id.player_root)
 
-
+        val lp = window.attributes
+        rawBrightness = when {
+            lp.screenBrightness < 0f -> {
+                // system default, so read real brightness from Settings (0–255 → 0–1)
+                val resolver = applicationContext.contentResolver
+                try {
+                    android.provider.Settings.System.getInt(
+                        resolver,
+                        android.provider.Settings.System.SCREEN_BRIGHTNESS
+                    ) / 255f
+                } catch (e: Exception) {
+                    0.5f // fallback
+                }
+            }
+            else -> lp.screenBrightness
+        }
         nightOverlay = findViewById(R.id.night_mode_overlay)
         overlayDelegate.playlist = findViewById(R.id.video_playlist)
         overlayDelegate.playlistSearchText = findViewById(R.id.playlist_search_text)
@@ -1890,18 +1906,16 @@ open class VideoPlayerActivity : AppCompatActivity(), PlaybackService.Callback, 
 
     internal fun changeBrightness(delta: Float) {
         // Estimate and adjust Brightness
-        val lp = window.attributes
-        val rawBrightness = lp.screenBrightness + delta
-        val brightness = rawBrightness.coerceIn(-1f, 1f)
+        rawBrightness = (rawBrightness + delta).coerceIn(-1f, 1f)
 
-        if (rawBrightness < 0.01f) {
+        if (rawBrightness < 0f) {
             val overlayAlpha = -rawBrightness.coerceIn(-1f, 0f)
             nightOverlay.alpha = overlayAlpha
         } else {
             nightOverlay.alpha = 0f
         }
-        setWindowBrightness(brightness)
-        overlayDelegate.showBrightnessBar((brightness * 100).roundToInt())
+        setWindowBrightness(rawBrightness.coerceAtLeast(0.01f))
+        overlayDelegate.showBrightnessBar((rawBrightness * 100).roundToInt())
     }
 
     private fun setWindowBrightness(brightness: Float) {
