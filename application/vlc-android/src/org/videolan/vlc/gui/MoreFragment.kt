@@ -198,6 +198,23 @@ class MoreFragment : BaseFragment(), IRefreshable, IHistory, IDialogManager,
             val name = bundle.getString(RENAME_DIALOG_NEW_NAME) ?: return@setFragmentResultListener
             renameStream(media, name)
         }
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // SHS Features — wire up the 4 buttons in the SHS Features card.
+        // Each launches ShsFeaturesActivity with the corresponding feature ID.
+        // ═══════════════════════════════════════════════════════════════════════
+        view.findViewById<View>(R.id.shs_live_tv_btn)?.setOnClickListener {
+            dev.shsplayer.features.ShsFeaturesActivity.launch(requireActivity(), dev.shsplayer.features.ShsFeaturesActivity.FEATURE_LIVE_TV)
+        }
+        view.findViewById<View>(R.id.shs_vault_btn)?.setOnClickListener {
+            dev.shsplayer.features.ShsFeaturesActivity.launch(requireActivity(), dev.shsplayer.features.ShsFeaturesActivity.FEATURE_VAULT)
+        }
+        view.findViewById<View>(R.id.shs_transfer_btn)?.setOnClickListener {
+            dev.shsplayer.features.ShsFeaturesActivity.launch(requireActivity(), dev.shsplayer.features.ShsFeaturesActivity.FEATURE_TRANSFER)
+        }
+        view.findViewById<View>(R.id.shs_qr_btn)?.setOnClickListener {
+            dev.shsplayer.features.ShsFeaturesActivity.launch(requireActivity(), dev.shsplayer.features.ShsFeaturesActivity.FEATURE_QR)
+        }
     }
 
     private fun manageDonationVisibility() {

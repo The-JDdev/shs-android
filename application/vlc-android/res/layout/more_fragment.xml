@@ -155,5 +155,168 @@
                 app:layout_constraintTop_toBottomOf="@+id/streams_entry"
                 app:title="@string/history" />
 
+        <!-- ════════════════════════════════════════════════════════════════════════════
+             SHS Features — custom cards added by SHS Android fork.
+             Each button launches a dedicated Compose-based activity that hosts
+             the corresponding feature from application/shs-features/ module.
+             ════════════════════════════════════════════════════════════════════════════ -->
+        <androidx.cardview.widget.CardView
+                android:id="@+id/shs_features_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="@color/orange400"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/history_entry">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SHS Features"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Live TV, Privacy Vault, Wi-Fi Transfer, QR Scanner"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp" />
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                    <LinearLayout
+                            android:id="@+id/shs_live_tv_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                        <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_shs_tv"
+                                android:tint="@android:color/white"
+                                tools:ignore="UseAppTint" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Live TV"
+                                android:textColor="@android:color/white"
+                                android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:id="@+id/shs_vault_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                        <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_shs_lock"
+                                android:tint="@android:color/white"
+                                tools:ignore="UseAppTint" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Vault"
+                                android:textColor="@android:color/white"
+                                android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:id="@+id/shs_transfer_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                        <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_shs_wifi"
+                                android:tint="@android:color/white"
+                                tools:ignore="UseAppTint" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Transfer"
+                                android:textColor="@android:color/white"
+                                android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:id="@+id/shs_qr_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="8dp">
+
+                        <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_shs_scan"
+                                android:tint="@android:color/white"
+                                tools:ignore="UseAppTint" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="QR Scan"
+                                android:textColor="@android:color/white"
+                                android:textSize="11sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
