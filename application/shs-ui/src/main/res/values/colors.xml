@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="shs_orange">#FFFF6D00</color>
+    <color name="shs_orange_light">#FFFFAB40</color>
+    <color name="shs_orange_dark">#FFC43E00</color>
+    <color name="shs_orange_container">#FFFFDCC8</color>
+    <color name="shs_on_orange_container">#FF3B0900</color>
+    <color name="shs_purple">#FF7C4DFF</color>
+    <color name="shs_purple_container">#FFE1D8FF</color>
+    <color name="shs_on_purple_container">#FF21005D</color>
+    <color name="shs_pink">#FFFF4081</color>
+    <color name="shs_pink_container">#FFFFD9E2</color>
+    <color name="shs_on_pink_container">#FF3B0014</color>
+    <color name="shs_surface">#FFFCFBF8</color>
+    <color name="shs_surface_variant">#FFE7E0D6</color>
+    <color name="shs_on_surface">#FF1E1B16</color>
+    <color name="shs_on_surface_variant">#FF4D4639</color>
+    <color name="shs_error">#FFBA1A1A</color>
+    <color name="shs_error_container">#FFFFDAD6</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+</resources>

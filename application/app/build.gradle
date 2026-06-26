@@ -164,6 +164,8 @@ dependencies {
     implementation project(':application:vlc-android')
     implementation project(':application:television')
     implementation project(':application:remote-access-server')
+    // SHS Player UI module (brings in shs-features transitively)
+    implementation project(':application:shs-ui')
     testImplementation project(':application:television')
     testImplementation project(':application:remote-access-server')
 

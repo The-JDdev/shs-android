@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SHS Player splash theme — wraps AndroidX SplashScreen -->
+    <style name="Theme.ShsPlayer.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/shs_orange</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_shs_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.ShsPlayer</item>
+    </style>
+
+    <!-- SHS Player base theme — Material 3 -->
+    <style name="Theme.ShsPlayer" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/shs_orange</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/shs_orange_container</item>
+        <item name="colorOnPrimaryContainer">@color/shs_on_orange_container</item>
+        <item name="colorSecondary">@color/shs_purple</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/shs_purple_container</item>
+        <item name="colorOnSecondaryContainer">@color/shs_on_purple_container</item>
+        <item name="colorTertiary">@color/shs_pink</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorError">@color/shs_error</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="android:colorBackground">@color/shs_surface</item>
+        <item name="colorOnBackground">@color/shs_on_surface</item>
+        <item name="colorSurface">@color/shs_surface</item>
+        <item name="colorOnSurface">@color/shs_on_surface</item>
+        <item name="colorSurfaceVariant">@color/shs_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/shs_on_surface_variant</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <!-- SHS Player theme variant for player activity (fullscreen, immersive) -->
+    <style name="Theme.ShsPlayer.Player" parent="Theme.ShsPlayer">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+</resources>

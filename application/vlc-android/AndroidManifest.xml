@@ -98,10 +98,11 @@
                 android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|uiMode|keyboard|keyboardHidden|navigation"
                 android:theme="@style/Theme.VLC.Transparent.NoUI"
                 android:exported="true">
+            <!-- SHS Player: LAUNCHER filter removed — ShsMainActivity is now the launcher.
+                 StartActivity is still reachable programmatically (ShsMainActivity launches
+                 it when user taps the "Videos" tab). -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
             </intent-filter>
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <!-- SHS MainActivity — Compose host for the entire SHS Player UI -->
+        <activity
+            android:name="dev.shsplayer.ui.ShsMainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.ShsPlayer.Splash"
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Crash reporter activity -->
+        <activity
+            android:name="dev.shsplayer.ui.crash.ShsCrashActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ShsPlayer"
+            android:launchMode="singleTask" />
+    </application>
+</manifest>
