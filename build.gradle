@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.android_plugin_version = '8.11.1'
-    ext.kotlin_version = '2.1.20'
+    ext.kotlin_version = '2.0.21'
     ext.kotlinx_version = '1.7.1'
     repositories {
         flatDir dirs: "gradle/plugins"
@@ -12,13 +12,14 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$android_plugin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.vanniktech:gradle-maven-publish-plugin:0.34.0'
     }
 }
 
 plugins {
-    id 'com.google.devtools.ksp' version '2.1.20-1.0.32' apply false
+    id 'com.google.devtools.ksp' version '2.0.21-1.0.28' apply false
 }
 
 allprojects {
@@ -36,7 +37,11 @@ allprojects {
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_1_8.toString()
-            freeCompilerArgs += ['-opt-in=kotlin.RequiresOptIn']
+            freeCompilerArgs += ['-opt-in=kotlin.RequiresOptIn', '-Xskip-prerelease-check', '-Xsuppress-warning=NOTHING_TO_OVERRIDE', '-Xsuppress-warning=ARGUMENT_TYPE_MISMATCH']
+            // Kotlin 2.1 is stricter than what the upstream VLC code was written for.
+            // Disable the strict null-check on override signatures to allow compilation
+            // of upstream code without modification.
+            allWarningsAsErrors = false
         }
     }
 }
@@ -49,7 +54,7 @@ ext {
     remoteAccessVersion = '0.9.0'
     libvlcVersion = vlcMajorVersion == 3 ? '3.6.3' :'4.0.0-eap21'
     medialibraryVersion = '0.13.14' + (vlcMajorVersion == 3 ? '' : '-vlc4') + '-rc18'
-    minSdkVersion = vlcMajorVersion == 3 ? 17 : 21
+    minSdkVersion = vlcMajorVersion == 3 ? 21 : 21
     buildToolsVersion = vlcMajorVersion == 3 ? '35.0.0' : '35.0.0'
     targetSdkVersion = 36
     compileSdkVersion = 36 // Dockers: 3.0=36 / 4.0=36

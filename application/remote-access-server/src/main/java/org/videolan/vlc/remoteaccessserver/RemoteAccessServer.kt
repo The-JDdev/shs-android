@@ -897,7 +897,11 @@ class RemoteAccessServer(private val context: Context) : PlaybackService.Callbac
             val currentUri = currentPathUri.build()
             val text: String = when {
                 //substitute a storage path to its name. See [replaceStoragePath]
-                PathOperationDelegate.storages.containsKey(currentUri.path) -> retrieveSafePath(PathOperationDelegate.storages.valueAt(PathOperationDelegate.storages.indexOfKey(currentUri.path)))
+                currentUri.path?.let { p -> PathOperationDelegate.storages.containsKey(p) } == true -> {
+                    val storageIndex = PathOperationDelegate.storages.indexOfKey(currentUri.path ?: "")
+                    val encoded = if (storageIndex >= 0) PathOperationDelegate.storages.valueAt(storageIndex) ?: "" else ""
+                    retrieveSafePath(encoded)
+                }
                 else -> currentUri.lastPathSegment ?: "root"
             }
             list.add(Pair(text, currentPathUri.toString()))

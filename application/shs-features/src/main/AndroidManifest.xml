@@ -34,15 +34,12 @@
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
-        <!-- FileProvider for vault restore + Wi-Fi transfer file sharing -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.shs.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/shs_file_provider_paths" />
-        </provider>
+        <!--
+            FileProvider: VLC's own FileProvider (${applicationId}.provider) is
+            used for vault restore and Wi-Fi transfer. We don't declare a
+            separate one here to avoid manifest merger conflicts.
+            VaultManager.getPlayableUri() uses "${packageName}.provider" as the
+            authority to match VLC's existing FileProvider.
+        -->
     </application>
 </manifest>

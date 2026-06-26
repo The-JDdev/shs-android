@@ -255,7 +255,10 @@ object VaultManager {
      */
     fun getPlayableUri(context: Context, vaultFile: VaultFile): Uri {
         val file = File(vaultFile.vaultPath)
-        val authority = context.packageName + ".shs.fileprovider"
+        // Use VLC's existing FileProvider authority (${applicationId}.provider)
+        // to avoid declaring a separate FileProvider that conflicts with VLC's
+        // during manifest merger.
+        val authority = context.packageName + ".provider"
         return FileProvider.getUriForFile(context, authority, file)
     }
 }

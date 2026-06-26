@@ -39,7 +39,14 @@ class PathAdapter(val browser: PathAdapterListener, val media: MediaWrapper) : R
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val text: String? = when {
             //substitute a storage path to its name. See [replaceStoragePath]
-            PathOperationDelegate.storages.containsKey(segments[position].toUri().path) -> pathOperationDelegate.retrieveSafePath(PathOperationDelegate.storages.valueAt(PathOperationDelegate.storages.indexOfKey(segments[position].toUri().path)))
+            segments[position].toUri().path?.let { p -> PathOperationDelegate.storages.containsKey(p) } == true -> {
+                val storagePath: String = segments[position].toUri().path ?: ""
+                val storageIndex = PathOperationDelegate.storages.indexOfKey(storagePath)
+                if (storageIndex >= 0) {
+                    val encodedValue: String = PathOperationDelegate.storages.valueAt(storageIndex) ?: ""
+                    pathOperationDelegate.retrieveSafePath(encodedValue)
+                } else null
+            }
             else -> segments[position].toUri().lastPathSegment
         }
         holder.root.text = text
