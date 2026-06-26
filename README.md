@@ -1,150 +1,279 @@
-# VLC for Android
+<div align="center">
 
-This is the official **Android** port of [VLC](https://videolan.org/vlc/).
+# 🎬 SHS Android
 
-VLC on Android plays all the same files as the classical version of VLC, and features a media database
-for Audio and Video files and stream.
+### VLC-Powered Multimedia Player with Privacy Vault, Wi-Fi Transfer & Live TV
 
-- [Project Structure](#project-structure)
-- [LibVLC](#libvlc)
-- [License](#license)
-- [Build](#build)
-  - [Build Application](#build-application)
-  - [Build LibVLC](#build-libvlc)
-- [Contribute](#contribute)
-  - [Pull requests](#pull-requests)
-  - [Translations](#translations)
-- [Issues and feature requests](#issues-and-feature-requests)
-- [Support](#support)
+**Fork of [js313/mx-vlc-android](https://github.com/js313/mx-vlc-android)** (which is itself a fork of [VLC for Android](https://github.com/videolan/vlc-android)) — rebranded and extended with custom SHS Player features.
 
-## Project Structure
+Built by **Sajjad Hussain Shobuj (SHS)** from Bangladesh 🇧🇩
 
-Here are the current folders of vlc-android project:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Android%207.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://www.android.com)
+[![Engine](https://img.shields.io/badge/Engine-LibVLC-FF8800?style=for-the-badge&logo=vlc&logoColor=white)](https://videolan.org/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.20-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org)
+[![Telegram](https://img.shields.io/badge/Telegram-Join%20Chat-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/aamoviesofficial)
 
-- extension-api : Application extensions SDK (not released yet)
-- application : Android application source code, organized by modules.
-- buildsystem : Build scripts, CI and maven publication configuration
-- libvlc : LibVLC gradle module, VLC source code will be cloned in `vlc/` at root level.
-- medialibrary : Medialibrary gradle module
+</div>
 
-## LibVLC
+---
 
-LibVLC is the Android library embedding VLC engine, which provides a lot of multimedia features, like:
+## 📖 Overview
 
-- Play every media file formats, every codec and every streaming protocols
-- Hardware and efficient decoding on every platform, up to 8K
-- Network browsing for distant filesystems (SMB, FTP, SFTP, NFS...) and servers (UPnP, DLNA)
-- Playback of Audio CD, DVD and Bluray with menu navigation
-- Support for HDR, including tonemapping for SDR streams
-- Audio passthrough with SPDIF and HDMI, including for Audio HD codecs, like DD+, TrueHD or DTS-HD
-- Support for video and audio filters
-- Support for 360 video and 3D audio playback, including Ambisonics
-- Ability to cast and stream to distant renderers, like Chromecast and UPnP renderers.
+**SHS Android** is a privacy-first, ad-free multimedia player for Android 7.0+ (API 24+). It uses **LibVLC** as the sole playback engine — no ExoPlayer, no proprietary components — and adds custom SHS Player features on top:
 
-And more.
+- 🔒 **Privacy Vault** — encrypted on-device vault with PIN + biometric unlock, secure-erase delete, lock-on-background (MX Player `PrivateFolder` pattern)
+- 📡 **Wi-Fi File Transfer** — NanoHTTPD-based local transfer server with QR-paired auth, no cloud, no internet required
+- 📺 **Live TV (IPTV)** — M3U/M3U8 parser with 10 bundled iptv-org playlists categorized into Bangladesh / Sports / News / Popular / Free
+- 📱 **QR Scanner** — CameraX + MLKit for scanning Wi-Fi transfer URLs
+- 🪟 **PiP (Picture-in-Picture)** — backward compatible to Android 7.0 (API 24+), graceful fallback to background playback on unsupported devices
+- 🎨 **Glassmorphism UI kit** — translucent frosted-glass surfaces with vibrant Google Material palette (optional, for custom screens)
 
-![LibVLC stack](https://images.videolan.org/images/libvlc_stack.png)
+---
 
-You can use our LibVLC module to power your own Android media player.
-Download the `.aar` directly from [Maven](https://search.maven.org/artifact/org.videolan.android/libvlc-all) or build from source.
+## 🙏 Credits & Attribution
 
-Have a look at our [sample codes](https://code.videolan.org/videolan/libvlc-android-samples).
+This project is a fork of:
 
-## License
+1. **[js313/mx-vlc-android](https://github.com/js313/mx-vlc-android)** — original MIT-licensed fork that personalized VLC for Android with MX Player-style features. **All credit for the VLC integration, build system, medialibrary wiring, and base UI goes to the original author `js313`.**
 
-VLC for Android is licensed under [GPLv2 (or later)](COPYING). Android libraries make this, de facto, a GPLv3 application.
+2. **[VLC for Android](https://github.com/videolan/vlc-android)** by the VideoLAN team — the underlying VLC engine, LibVLC, medialibrary, and most of the playback / library / browser code is theirs. Licensed under GPLv2.
 
-VLC engine *(LibVLC)* for Android is licensed under [LGPLv2](libvlc/COPYING.LIB).
+3. **Custom SHS Player features** (in `application/shs-features/` module) — written from scratch by **Sajjad Hussain Shobuj (SHS)**, MIT-licensed:
+   - `dev.shsplayer.features.liveTv` — M3U parser + IPTV channel browser
+   - `dev.shsplayer.features.privacyVault` — vault with PIN, biometric, secure-erase, lock-on-bg
+   - `dev.shsplayer.features.wifiTransfer` — NanoHTTPD transfer server + QR generator
+   - `dev.shsplayer.features.qrScanner` — CameraX + MLKit barcode scanner
+   - `dev.shsplayer.features.pip` — backward-compatible PiP helper (API 24+)
 
-## Build
+The in-app experience is rebranded as **SHS Player**. The VLC name and logo are respected — only the launcher icon and app name strings have been changed. All original copyright notices, license headers, and `COPYING` files from upstream are preserved unchanged.
 
-Native libraries are published on bintray. So you can:
+---
 
-- Build the application and get libraries via gradle dependencies (JVM build only)
-- Build the whole app (LibVLC + Medialibrary + Application)
-- Build LibVLC only, and get an .aar package
+## 📦 Project Structure
 
-### Build Application
-
-VLC-Android build relies on gradle build modes :
-
-- `Release` & `Debug` will get LibVLC and Medialibrary from Bintray, and build application source code only.
-- `SignedRelease` also, but it will allow you to sign application apk with a local keystore.
-- `Dev` will build build LibVLC, Medialibrary, and then build the application with these binaries. (via build scripts only)
-
-### Build LibVLC
-
-You will need a recent Linux distribution to build VLC.
-It should work with Windows 10, and macOS, but there is no official support for this.
-
-#### Setup
-
-Check our [AndroidCompile wiki page](https://wiki.videolan.org/AndroidCompile/), especially for build dependencies.
-
-Here are the essential points:
-
-On Debian/Ubuntu, install the required dependencies:
-```bash
-sudo apt install automake ant autopoint cmake build-essential libtool-bin \
-    patch pkg-config protobuf-compiler ragel subversion unzip git \
-    openjdk-8-jre openjdk-8-jdk flex python wget
+```
+shs-android/
+├── application/
+│   ├── app/                    # Application module (launches the app)
+│   ├── vlc-android/            # Main VLC playback module (from upstream)
+│   ├── shs-features/           # 🆕 SHS Player custom features (NEW in this fork)
+│   │   └── src/main/java/dev/shsplayer/features/
+│   │       ├── liveTv/         # M3U parser + IPTV browser
+│   │       ├── privacyVault/   # PIN + biometric vault
+│   │       ├── wifiTransfer/   # NanoHTTPD server + QR
+│   │       ├── qrScanner/      # CameraX + MLKit
+│   │       └── pip/            # Backward-compatible PiP helper
+│   ├── resources/              # Shared resources (icons, strings, themes)
+│   ├── medialibrary/           # Media database
+│   ├── tools/                  # Build tools
+│   ├── television/             # Android TV variant
+│   ├── donations/              # Donation screens
+│   ├── moviepedia/             # Movie metadata
+│   └── remote-access-*/        # Remote access (server + client)
+├── medialibrary/               # Medialibrary native module
+├── libvlcjni/                  # LibVLC JNI bindings
+├── buildsystem/                # Build scripts
+├── COPYING                     # GPLv2 license (from upstream VLC)
+└── README.md                   # This file
 ```
 
-Setup the build environment:
-Set `$ANDROID_SDK` to point to your Android SDK directory
-`export ANDROID_SDK=/path/to/android-sdk`
+---
 
-Set `$ANDROID_NDK` to point to your Android NDK directory
-`export ANDROID_NDK=/path/to/android-ndk`
+## 🔧 Building
 
-Then, you are ready to build!
+### Prerequisites
 
-#### Build
+- **JDK 17** (set `JAVA_HOME`)
+- **Android SDK** with `platform-android-36` and `build-tools;36.0.0`
+- **Android NDK** (for native LibVLC build — but pre-built `.aar` artifacts are used by default)
+- ~6 GB free disk for Gradle caches
 
-`buildsystem/compile.sh -l -a <ABI>`
+### Build commands
 
-ABI can be `arm`, `arm64`, `x86`, `x86_64` or `all` for a multi-abis build
+```bash
+# Clone
+git clone https://github.com/The-JDdev/shs-android.git
+cd shs-android
 
-You can do a library release build with `-r` argument
+# Build a debug APK (universal)
+./gradlew :application:app:assembleDebug
 
-#### Medialibrary
+# Build release APKs (per-ABI splits)
+./gradlew :application:app:assembleRelease
+```
 
-Build Medialibrary with `-ml` instead of `-l`
+### Build outputs
 
-## Contribute
+```
+application/app/build/outputs/apk/debug/app-debug.apk
+application/app/build/outputs/apk/release/app-arm64-v8a-release.apk
+application/app/build/outputs/apk/release/app-universal-release.apk
+```
 
-VLC is a libre and open source project, we welcome all contributions.
+---
 
-Just respect our [Code of Conduct](https://wiki.videolan.org/CoC/), and if you want do contribute to the UI or add a new feature, please open an issue first so there can be a discussion about it.
+## 🆕 SHS Features Module
 
+The `application/shs-features/` module is the only code added on top of upstream. It is a self-contained Gradle library module that depends only on AndroidX, Compose, NanoHTTPD, ZXing, CameraX, MLKit, and Accompanist — no dependency on the VLC module, so it can be reused in any other Android project.
 
-### Pull requests
+### Live TV
 
-Pull requests must be proposed on our [gitlab server](https://code.videolan.org/videolan/vlc-android/).
+```kotlin
+// Parse an M3U playlist
+val channels = M3uParser.parse(context, "https://iptv-org.github.io/iptv/countries/bd.m3u")
 
-So you must create an account, fork vlc-android project, and propose your merge requests from it.
+// Get the bundled default playlists
+val playlists = DefaultIptvPlaylists.playlists  // 10 iptv-org playlists categorized
+val bdPlaylists = DefaultIptvPlaylists.forCategory(IptvCategory.BANGLADESH)
+```
 
-**Except for translations**, see the section below.
+### Privacy Vault
 
-### Translations
+```kotlin
+// First-time setup
+VaultManager.setupVault(context, "1234", "What is your pet's name?", "tom")
 
-You can help improving translations too by joining the [transifex vlc project](https://www.transifex.com/yaron/vlc-trans/dashboard/)
+// Verify password
+if (VaultManager.verifyPassword(context, "1234")) { /* unlock */ }
 
-Translations merge requests are then generated from transifex work.
+// Move a video into the vault (deletes from MediaStore)
+val vaultFile = VaultManager.moveToVault(context, videoUri, "video")
 
-## Issues and feature requests
+// Restore back to gallery
+VaultManager.restoreFromVault(context, vaultFile)
 
-VLC for Android bugtracker is hosted on [VideoLAN gitlab](https://code.videolan.org/videolan/vlc-android/issues)  
-Please look for existing issues and provide as much useful details as you can (e.g. vlc app version, device and Android version).
+// Secure-erase and delete
+VaultManager.deleteFromVault(context, vaultFile)
+```
 
-A template is provided, please use it!
+### Wi-Fi File Transfer
 
-Issues without relevant information will be ignored, we cannot help in this case.
+```kotlin
+// Start the receiver server
+val server = WifiTransferServer(context, port = 12345, onFileReceived = { file ->
+    Log.d("Transfer", "Received: ${file.name}")
+})
+server.start()
 
-## Support
+// Show the QR code (sender scans this)
+val ip = WifiTransferUtils.getWifiIpAddress(context) ?: "0.0.0.0"
+val url = "http://$ip:12345?token=${server.authToken}"
+val qrBitmap = WifiTransferUtils.generateQrCodeBitmap(url)
+```
 
-- For usage support, use the in-app feedback option in the `About` screen
-- Android mailing list: android@videolan.org
-- bugtracker: https://code.videolan.org/videolan/vlc-android/issues
-- IRC: *#videolan* channel on [libera](https://libera.chat/)
-- VideoLAN forum: https://forum.videolan.org/viewforum.php?f=35
+### QR Scanner (Compose)
+
+```kotlin
+QrScannerView(
+    onResult = { scannedValue ->
+        // scannedValue is the URL/text encoded in the QR code
+    },
+    modifier = Modifier.fillMaxSize(),
+)
+```
+
+### PiP (backward compatible to API 24)
+
+```kotlin
+override fun onUserLeaveHint() {
+    super.onUserLeaveHint()
+    // Returns true if PiP was entered, false if device doesn't support PiP
+    // (in which case you should fall back to background play via foreground service)
+    val enteredPip = PipHelper.tryEnterPip(
+        activity = this,
+        videoWidth = player.videoWidth,
+        videoHeight = player.videoHeight,
+        isPlaying = player.isPlaying,
+    )
+    if (!enteredPip) {
+        // Fall back: hand off to background service
+        BackgroundPlaybackService.startPlayback(this, currentUri)
+    }
+}
+```
+
+---
+
+## 🔐 Privacy & Security
+
+- **No data collection.** SHS Android does not collect, transmit, or share any personal information.
+- **All processing is on-device.** Media decoding, thumbnail generation, subtitle parsing, QR decoding — everything happens locally.
+- **Wi-Fi File Transfer stays on your LAN.** The NanoHTTPD server binds to your local Wi-Fi interface; there is no cloud relay.
+- **Privacy Vault files are stored in app-private storage** at `context.filesDir/vault/{videos,music}/` — invisible to other apps and to the gallery. They are deleted if you uninstall the app (so back them up first!).
+- **Secure-erase on delete** — vault files are overwritten with zeroes before being deleted (for files < 100 MB).
+
+---
+
+## 📋 Permissions Explained
+
+| Permission | Why |
+|---|---|
+| `INTERNET` | Streaming (HLS/DASH/RTSP), IPTV, Wi-Fi transfer server. |
+| `READ_MEDIA_VIDEO` / `READ_MEDIA_AUDIO` (Android 13+) | Read your media. |
+| `READ_EXTERNAL_STORAGE` (≤ Android 12) | Read media on older Android. |
+| `MANAGE_EXTERNAL_STORAGE` | Vault file operations on Android 10 and below. |
+| `CAMERA` | QR scanner. |
+| `ACCESS_WIFI_STATE` / `CHANGE_WIFI_STATE` / `ACCESS_NETWORK_STATE` / `NEARBY_WIFI_DEVICES` (Android 13+) | Wi-Fi file transfer, device discovery. |
+| `ACCESS_FINE_LOCATION` / `ACCESS_COARSE_LOCATION` | Required by Android to expose Wi-Fi BSSID/SSID for QR transfer format. Never stored or transmitted. |
+| `USE_BIOMETRIC` / `USE_FINGERPRINT` | Privacy Vault biometric unlock. |
+| `FOREGROUND_SERVICE` / `FOREGROUND_SERVICE_MEDIA_PLAYBACK` | Background playback notification. |
+| `WAKE_LOCK` | Keep CPU awake during playback. |
+| `VIBRATE` | Haptic feedback on player controls. |
+
+---
+
+## 🌍 Internationalization
+
+Inherits VLC's translation infrastructure — 40+ languages including Bengali (`bn`), Hindi (`hi`), Urdu (`ur`), Punjabi (`pa`), Tamil (`ta`), and more.
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. Branch from `master`
+3. Run `./gradlew ktlintCheck` before committing
+4. Open a Pull Request with a clear description
+
+---
+
+## 📄 License
+
+- **Upstream VLC code** (everything in `application/vlc-android/`, `application/resources/`, `medialibrary/`, `libvlcjni/`, etc.): **GPLv2** — see [`COPYING`](COPYING)
+- **SHS Player custom features** (`application/shs-features/`): **MIT** — see [`application/shs-features/LICENSE`](application/shs-features/LICENSE)
+- **Original `js313/mx-vlc-android` modifications**: **MIT** (per the upstream repo's license)
+
+When redistributing, you must comply with both GPLv2 (for VLC code) and MIT (for SHS features). The GPLv2 is the more restrictive of the two and applies to the combined work.
+
+---
+
+## 💬 Community
+
+| Platform | Link |
+|---|---|
+| 📱 **Telegram channel** | [t.me/aamoviesofficial](https://t.me/aamoviesofficial) |
+| 📘 **Facebook** | [fb.com/itsshsshobuj](https://fb.com/itsshsshobuj) |
+| 💻 **GitHub** | [github.com/The-JDdev](https://github.com/The-JDdev) |
+| ✉️ **Email** | `thejddev.official@gmail.com` |
+
+---
+
+## 💎 Support the Project
+
+If SHS Android has empowered your workflow, please consider supporting the project:
+
+- **bKash** (Bangladesh): `01310211442`
+- **Telegram**: [@aamoviesadmin](https://t.me/aamoviesadmin)
+
+Star ⭐ the repo to help others discover it.
+
+---
+
+<div align="center">
+
+**Built with 🔥 from Bangladesh 🇧🇩**
+
+*Forked from [js313/mx-vlc-android](https://github.com/js313/mx-vlc-android) (MIT) · Powered by [LibVLC](https://videolan.org/) · SHS Player features by Sajjad Hussain Shobuj (SHS)*
+
+</div>

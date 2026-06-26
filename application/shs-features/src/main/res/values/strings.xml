@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shs_live_tv">Live TV</string>
+    <string name="shs_privacy_vault">Privacy Vault</string>
+    <string name="shs_wifi_transfer">Wi-Fi Transfer</string>
+    <string name="shs_qr_scanner">QR Scanner</string>
+    <string name="shs_vault_setup_password">Set Vault Password</string>
+    <string name="shs_vault_unlock">Unlock Vault</string>
+    <string name="shs_vault_empty">Vault is empty</string>
+    <string name="shs_vault_files">%1$d files in vault</string>
+    <string name="shs_transfer_ready">Ready to receive</string>
+    <string name="shs_transfer_start">Start Receiving</string>
+    <string name="shs_transfer_qr_hint">Scan this QR on the sender device</string>
+    <string name="shs_iptv_loading">Loading channels…</string>
+    <string name="shs_iptv_no_channels">No channels found</string>
+    <string name="shs_iptv_search">Search channels…</string>
+</resources>

@@ -156,6 +156,8 @@ dependencies {
     signedReleaseApi "org.videolan.android:libvlc-all:$rootProject.ext.libvlcVersion"
     signedReleaseApi "org.videolan.android:medialibrary-all:$rootProject.ext.medialibraryVersion"
     api project(':application:tools')
+    // SHS Player custom features
+    api project(':application:shs-features')
     api project(':application:resources')
     api project(':application:mediadb')
     api project(':application:live-plot-graph')

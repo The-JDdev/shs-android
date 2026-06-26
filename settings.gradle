@@ -23,3 +23,5 @@ include ':application:tools', ':application:resources', ':application:mediadb', 
 include ':application:vlc-android'
 include ':application:moviepedia'
 include ':application:remote-access-client'
+// SHS Player custom features module (Live TV, Privacy Vault, Wi-Fi Transfer, QR Scanner)
+include ':application:shs-features'
